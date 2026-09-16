@@ -65,6 +65,7 @@ export default function Contact({ onNavigate }) {
         animate={visible ? { opacity: 1 } : {}}
         transition={{ duration: 1.2, ease }}
       />
+      <div className="contact-bg-overlay" aria-hidden="true" />
 
       {/* Subtle Grain Texture Overlay */}
       <div className="contact-grain" aria-hidden="true" />
@@ -211,8 +212,9 @@ export default function Contact({ onNavigate }) {
           <ul className="contact-footer-nav-list">
             <li><a href="#worlds" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('Worlds'); }}>WORLDS</a></li>
             <li><a href="#philosophy" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('Philosophy'); }}>PHILOSOPHY</a></li>
-            <li><a href="#work" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('SelectedWork'); }}>PROJECTS</a></li>
             <li><a href="#process" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('Process'); }}>PROCESS</a></li>
+            <li><a href="#language" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('Language'); }}>LANGUAGE</a></li>
+            <li><a href="#work" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('SelectedWork'); }}>PROJECTS</a></li>
           </ul>
         </div>
 

@@ -6,8 +6,8 @@ import './styles.css';
 import RedesignedNavbar from './Navbar';
 import Philosophy from './Philosophy';
 import Worlds from './Worlds';
-import Process from './Process';
 import Language from './Language';
+import Process from './Process';
 import SelectedWork from './SelectedWork';
 import Contact from './Contact';
 
@@ -48,16 +48,26 @@ function Hero() {
   const navigate = name => name === 'About' ? openPhilosophy() : name === 'Contact' ? openContact() : ['Work', 'Services'].includes(name) ? discover() : setPanel(name);
   return <main>
     <RedesignedNavbar onNavigate={navigate} onOpenMenu={() => setPanel('Menu')}/>
-    <section className="hero relative isolate overflow-hidden" aria-label="Black Sheep Designs" onPointerMove={e => { if (reduce || e.pointerType !== 'mouse' || innerWidth < 768) return; mx.set((e.clientX / innerWidth - .5) * 6); my.set((e.clientY / innerHeight - .5) * 6); }} onPointerLeave={() => { mx.set(0); my.set(0); }}>
-    <motion.div className="interior" style={{ x, y }}><motion.img initial={{ scale: reduce ? 1 : 1.04 }} animate={{ scale: 1 }} transition={{ duration: 1.4, ease }} src="/images/interior.png" alt="Burgundy velvet sofa and dark marble table beneath an illuminated architectural arch, with a sculptural tree and bronze lighting" fetchPriority="high"/></motion.div>
+    <section className="hero relative isolate overflow-hidden flex flex-col items-center justify-center text-center" aria-label="Black Sheep Designs" onPointerMove={e => { if (reduce || e.pointerType !== 'mouse' || innerWidth < 768) return; mx.set((e.clientX / innerWidth - .5) * 6); my.set((e.clientY / innerHeight - .5) * 6); }} onPointerLeave={() => { mx.set(0); my.set(0); }}>
+    <motion.div className="interior" style={{ x, y }}><motion.img initial={{ scale: reduce ? 1 : 1.04 }} animate={{ scale: 1 }} transition={{ duration: 1.4, ease }} src="/hero.png" alt="Burgundy velvet sofa and dark marble table beneath an illuminated architectural arch, with a sculptural tree and bronze lighting" fetchPriority="high"/></motion.div>
     <div className="light-overlay"/><div className="grain" aria-hidden="true"/>
-    <motion.div className="headline-wrap" style={{ x: tx, y: ty }}>
-      <h1>{['LUXURY ARCHITECTURE', '& INTERIOR DESIGN', 'STUDIO DUBAI.'].map((line, i) => <span className={`headline-line ${i > 1 ? 'gold' : ''}`} key={line}><motion.span initial={{ y: reduce ? 0 : '110%' }} animate={{ y: 0 }} transition={{ duration: 1.2, delay: .25 + i * .11, ease }}>{line}</motion.span></span>)}</h1>
-      <motion.div {...reveal(.85)} className="support"><span className="copy-divider"/><p>Bespoke residential &amp; commercial interior<br className="desktop-break"/> architecture, crafting distinctive environments<br className="desktop-break"/> with timeless elegance.</p><button className="explore flex items-center" onClick={openContact}><span className="arrow-circle"><ArrowRight size={23} strokeWidth={1}/></span><span>CONTACT US</span></button></motion.div>
+    <motion.div className="headline-wrap centered-hero-content" style={{ x: tx, y: ty }}>
+      <h1>
+        {['LUXURY ARCHITECTURE', '& INTERIOR DESIGN', 'STUDIO DUBAI.'].map((line, i) => (
+          <span className={`headline-line ${i > 1 ? 'gold' : ''}`} key={line}>
+            <motion.span initial={{ y: reduce ? 0 : '110%' }} animate={{ y: 0 }} transition={{ duration: 1.2, delay: .25 + i * .11, ease }}>
+              {line}
+            </motion.span>
+          </span>
+        ))}
+      </h1>
+      <motion.div {...reveal(.85)} className="mt-8 flex justify-center">
+        <button className="hero-cta-btn" onClick={openContact}>
+          <span>EXPLORE OUR WORK</span>
+          <ArrowRight size={18} strokeWidth={1.2}/>
+        </button>
+      </motion.div>
     </motion.div>
-    <motion.div {...reveal(.9)} className="mood absolute" aria-hidden="true"><span>ATMOSPHERE</span><i/><span>TEXTURE</span><i/><span>EMOTION</span></motion.div>
-    <Services onSelect={setPanel}/>
-    <button className="scroll-indicator absolute" onClick={openPhilosophy}><span>SCROLL TO DISCOVER</span><motion.span animate={reduce ? {} : { y: [0, 7, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}><ArrowDown size={25} strokeWidth={.8}/></motion.span></button>
   </section><Philosophy/><Worlds/><Process/><Language/><SelectedWork/><Contact onNavigate={navigate}/><Overlay panel={panel} close={() => setPanel(null)} onNavigate={navigate}/></main>;
 }
 createRoot(document.getElementById('root')).render(<React.StrictMode><MotionConfig reducedMotion="user"><Hero/></MotionConfig></React.StrictMode>);

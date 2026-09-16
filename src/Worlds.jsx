@@ -1,21 +1,132 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
-import { ArrowRight, ArrowDown } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useInView } from 'framer-motion';
 import './worlds.css';
-const ease=[.16,1,.3,1];
-const services=[
-{id:'retail',number:'01',name:['RETAIL &','WINDOW DISPLAYS'],micro:['DESIGNED TO','MAKE THEM STOP.'],description:['Designed to','make them stop.'],crop:'1271 88 244 416',alt:'Sculptural mannequin and stone plinths in a burgundy retail window.'},
-{id:'hotel',number:'02',name:['HOSPITALITY','& 4★ HOTELS'],micro:['STAYS WORTH','REMEMBERING.'],description:['Stays worth','remembering.'],crop:'1042 92 216 412',alt:'Hotel restaurant with burgundy seating, bronze lighting and warm stone arches.'},
-{id:'holiday',number:'03',name:['HOLIDAY HOMES'],micro:['TEMPORARY STAYS.','LASTING FEELINGS.'],description:['Temporary stays.','Lasting feelings.'],crop:'781 452 210 191',alt:'Sunlit holiday villa with cream arches and a courtyard pool.'},
-{id:'residential',number:'04',name:['RESIDENTIAL'],micro:['SPACES MADE','PERSONAL.'],description:['Spaces made personal.'],crop:'658 24 374 783',alt:'Monumental stone arch framing a sculptural tree, cream sofa and dark circular coffee table.'},
-{id:'office',number:'05',name:['COMMERCIAL','& OFFICES'],micro:['WHERE PURPOSE','MEETS PERSONALITY.'],description:['Where purpose','meets personality.'],crop:'850 516 442 333',alt:'Executive boardroom with a long conference table and floor-to-ceiling city views.'},
-{id:'events',number:'06',name:['EVENT STYLING'],micro:['MOMENTS.','TRANSFORMED.'],description:['Moments','transformed.'],crop:'1303 488 369 342',alt:'Candlelit dining installation beneath dramatic burgundy floral trees.'}];
-const lines=words=>words.map(word=><span key={word}>{word}</span>);
-function Environment({service}){const holiday=service.id==='holiday';return <svg className="s03-environment" viewBox={service.crop} preserveAspectRatio="xMidYMid slice" role="img" aria-label={service.alt}><image href={holiday?'/images/worlds-plate.png':'/images/section03-clean.png'} width={holiday?1536:1672} height={holiday?1024:941}/></svg>}
-function Project({service,active,setActive,reduced,visible,delay=0,mobile=false}){const holiday=service.id==='residential'&&active==='holiday';const display=holiday?services[2]:service;return <motion.figure id={mobile?undefined:`s03-project-${service.id}`} className={`s03-project s03-project-${service.id} ${active===service.id||holiday?'s03-is-active':''} ${mobile?'s03-expanded-project':''}`} initial={reduced||mobile?false:{clipPath:'inset(100% 0 0 0)'}} animate={visible||mobile?{clipPath:'inset(0% 0 0 0)'}:{}} viewport={{once:true,amount:.1}} transition={{duration:reduced?0:1.1,delay:reduced?0:delay,ease}} onMouseEnter={()=>!mobile&&setActive(service.id)} onMouseLeave={()=>!mobile&&setActive(null)}><div className="s03-project-mask"><Environment service={service}/>{service.id==='residential'&&<motion.div className="s03-holiday-crossfade" animate={{opacity:holiday?1:0}} transition={{duration:.65}} aria-hidden={!holiday}><Environment service={services[2]}/></motion.div>}<div className="s03-project-shade"/><figcaption><span className="s03-project-number">{display.number}</span><h3>{lines(display.name)}</h3><p>{lines(display.description)}</p><i/></figcaption></div></motion.figure>}
-export default function Worlds(){const sectionRef=useRef(null);const visible=useInView(sectionRef,{once:true,amount:.08});const reduced=useReducedMotion();const[mobile,setMobile]=useState(()=>matchMedia("(max-width:1100px)").matches);useEffect(()=>{const query=matchMedia("(max-width:1100px)");const update=()=>setMobile(query.matches);query.addEventListener("change",update);return()=>query.removeEventListener("change",update)},[]);const[active,setActive]=useState(null);const[expanded,setExpanded]=useState(null);const fade=delay=>({initial:reduced?false:{opacity:0,y:12},animate:visible?{opacity:1,y:0}:{},viewport:{once:true},transition:{duration:.75,delay:reduced?0:delay,ease}});return <section ref={sectionRef} id="worlds" className="bs03-section relative isolate overflow-hidden" aria-labelledby="worlds-title">
-<svg className="s03-mask-definitions" aria-hidden="true"><defs><clipPath id="residential-mask" clipPathUnits="objectBoundingBox"><path d="M0 0H.15C.65 0 1 .13 1 .30V.60C.91 .60 .98 .72 .87 .75C.63 .82 .51 .87 .438 1H0Z"/></clipPath><clipPath id="retail-mask" clipPathUnits="objectBoundingBox"><path d="M0 0H.43C.79 0 1 .14 1 .32V.975Q.9 1 .7 1H0Z"/></clipPath><clipPath id="office-mask" clipPathUnits="objectBoundingBox"><path d="M.438 0H1V.94L0 1C0 .61 .23 .44 .36 .32C.45 .23 .438 .1 .438 0Z"/></clipPath><clipPath id="events-mask" clipPathUnits="objectBoundingBox"><path d="M0 1V.43C0 .12 .17 .13 .5 .07L1 0V1Z"/></clipPath></defs></svg>
-<div className="s03-worlds-grain" aria-hidden="true"/><div className="s03-worlds-label"><span>03 / WHAT WE CREATE</span><motion.i initial={{scaleX:reduced?1:0}} animate={{scaleX:visible?1:0}} viewport={{once:true}} transition={{duration:.8,delay:.1,ease}}/></div>
-<h2 id="worlds-title" className="s03-worlds-headline">{['ONE STUDIO.','many worlds.'].map((text,i)=><span className="s03-headline-line" key={text}><motion.span initial={reduced?false:{y:'115%'}} animate={visible?{y:0}:{}} viewport={{once:true}} transition={{duration:.9,delay:.18+i*.12,ease}}>{text}</motion.span></span>)}</h2><motion.p className="s03-worlds-intro" {...fade(.35)}>From intimate homes to windows that stop you in your tracks —<br className="s03-desktop-break"/> we shape spaces, moments and experiences with character.</motion.p>
-<div className="s03-hero-project"><Project service={services[3]} {...{setActive,reduced,visible}} active={mobile?null:active} delay={.45}/></div><div className="s03-worlds-index" aria-label="Design services">{services.map((service,index)=><div className={`s03-service s03-service-${service.id}`} key={service.id}><motion.button className={`s03-service-row ${active===service.id?'s03-is-active':''}`} {...fade(.4+index*.055)} onMouseEnter={()=>setActive(service.id)} onMouseLeave={()=>setActive(null)} onFocus={()=>setActive(service.id)} onBlur={()=>setActive(null)} onClick={()=>{if(mobile)setExpanded(expanded===service.id?null:service.id);setActive(service.id)}} aria-expanded={mobile?expanded===service.id:undefined} aria-controls={mobile?`preview-${service.id}`:`s03-project-${service.id==='holiday'?'residential':service.id}`}><span className="s03-service-number">{service.number}</span><span className="s03-service-name">{lines(service.name)}</span><span className="s03-service-micro">{lines(service.micro)}</span><span className="s03-service-arrow"><ArrowRight strokeWidth={.85}/></span></motion.button><div id={`preview-${service.id}`} className="s03-mobile-preview"><AnimatePresence initial={false}>{mobile&&expanded===service.id&&<motion.div initial={{height:0,opacity:0}} animate={{height:'auto',opacity:1}} exit={{height:0,opacity:0}} transition={{duration:reduced?0:.45,ease}}><Project service={service} {...{active,setActive,reduced,visible}} mobile/></motion.div>}</AnimatePresence></div></div>)}</div>
-<div className="s03-supporting-gallery" aria-label="Selected design environments">{[services[1],services[0],services[4],services[5]].map((service,i)=><Project key={service.id} service={service} {...{active,setActive,reduced,visible}} delay={.55+i*.1}/>)}</div><div className="s03-worlds-living">LIVING<br/>BEAUTIFULLY<br/>EVERYDAY</div><motion.div className="s03-worlds-script" {...fade(1.05)}>Design<br/><span>Beyond</span><br/><span>the Expected</span><i/></motion.div><svg className="s03-worlds-velvet" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-hidden="true"><defs><clipPath id="velvet-mask"><path d="M560 941C790 880 1080 830 1210 829C1270 829 1310 843 1360 847C1480 780 1580 761 1672 746V941Z"/></clipPath></defs><image href="/images/section03-clean.png" width="1672" height="941" clipPath="url(#velvet-mask)"/></svg><div className="s03-worlds-bottom">SPACES<i/>PEOPLE<i/>EMOTIONS</div><div className="s03-worlds-scroll"><span>SCROLL<br/>TO EXPLORE</span><motion.span animate={reduced?{}:{y:[0,6,0]}} transition={{duration:3,repeat:Infinity,ease:'easeInOut'}}><ArrowDown strokeWidth={.8}/></motion.span></div></section>}
+
+const ease = [.16, 1, .3, 1];
+
+const categories = [
+  {
+    id: 'retail',
+    number: '01',
+    name: ['RETAIL &', 'WINDOW DISPLAYS'],
+    description: 'Designed to make them stop.',
+    crop: '1271 88 244 416',
+    alt: 'Sculptural mannequin and stone plinths in a burgundy retail window.'
+  },
+  {
+    id: 'hotel',
+    number: '02',
+    name: ['HOSPITALITY', '& 4★ HOTELS'],
+    description: 'Stays worth remembering.',
+    crop: '1042 92 216 412',
+    alt: 'Hotel restaurant with burgundy seating, bronze lighting and warm stone arches.'
+  },
+  {
+    id: 'holiday',
+    number: '03',
+    name: ['HOLIDAY HOMES'],
+    description: 'Temporary stays. Lasting feelings.',
+    crop: '781 452 210 191',
+    alt: 'Sunlit holiday villa with cream arches and a courtyard pool.'
+  },
+  {
+    id: 'residential',
+    number: '04',
+    name: ['RESIDENTIAL'],
+    description: 'Spaces made personal.',
+    crop: '658 24 374 783',
+    alt: 'Monumental stone arch framing a sculptural tree, cream sofa and dark circular coffee table.'
+  }
+];
+
+export default function Worlds() {
+  const sectionRef = useRef(null);
+  const visible = useInView(sectionRef, { once: true, amount: 0.1 });
+  const reduced = useReducedMotion();
+
+  const fade = (delay = 0) => ({
+    initial: reduced ? false : { opacity: 0, y: 15 },
+    animate: visible ? { opacity: 1, y: 0 } : {},
+    transition: { duration: 0.8, delay: reduced ? 0 : delay, ease }
+  });
+
+  return (
+    <section ref={sectionRef} id="worlds" className="bs03-section relative isolate overflow-hidden">
+      {/* Master Arch Mask SVG Definition */}
+      <svg className="s03-mask-definitions" aria-hidden="true">
+        <defs>
+          <clipPath id="arch-master-mask" clipPathUnits="objectBoundingBox">
+            <path d="M0 0H.43C.79 0 1 .14 1 .32V.975Q.9 1 .7 1H0Z" />
+          </clipPath>
+        </defs>
+      </svg>
+
+      <div className="s03-worlds-grain" aria-hidden="true" />
+
+      <div className="s03-container">
+        {/* LEFT EDITORIAL AREA (34%) */}
+        <div className="s03-left-col">
+          <motion.div className="s03-section-label" {...fade(0.1)}>
+            <span>03 / OUR SERVICES</span><i />
+          </motion.div>
+
+          <h2 className="s03-worlds-headline">
+            <span className="s03-headline-line">
+              <motion.span initial={reduced ? false : { y: '115%' }} animate={visible ? { y: 0 } : {}} transition={{ duration: 0.9, delay: 0.2, ease }}>
+                ONE STUDIO.
+              </motion.span>
+            </span>
+            <span className="s03-headline-line s03-italic">
+              <motion.span initial={reduced ? false : { y: '115%' }} animate={visible ? { y: 0 } : {}} transition={{ duration: 0.9, delay: 0.32, ease }}>
+                many worlds.
+              </motion.span>
+            </span>
+          </h2>
+
+          <motion.p className="s03-worlds-intro" {...fade(0.4)}>
+            From intimate homes to windows that stop you in your tracks — we shape spaces, moments and experiences with character.
+          </motion.p>
+
+          <motion.div className="s03-worlds-bottom-tag" {...fade(0.55)}>
+            <span>SPACES</span><i></i><span>PEOPLE</span><i></i><span>EMOTIONS</span>
+          </motion.div>
+        </div>
+
+        {/* RIGHT PORTFOLIO AREA (66%): EXACT 4 UNIFORM ARCHED CARDS */}
+        <div className="s03-right-col">
+          <div className="s03-cards-grid">
+            {categories.map((cat, i) => (
+              <motion.figure
+                key={cat.id}
+                className="s03-card"
+                initial={reduced ? false : { opacity: 0, y: 25 }}
+                animate={visible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.85, delay: 0.35 + i * 0.08, ease }}
+              >
+                <div className="s03-card-mask">
+                  <svg className={`s03-card-img s03-img-${cat.id}`} viewBox={cat.crop} preserveAspectRatio="xMidYMid slice" role="img" aria-label={cat.alt}>
+                    <image 
+                      href={cat.id === 'holiday' ? '/images/worlds-plate.png' : '/images/section03-clean.png'} 
+                      width={cat.id === 'holiday' ? 1536 : 1672} 
+                      height={cat.id === 'holiday' ? 1024 : 941} 
+                    />
+                  </svg>
+                  <div className="s03-card-gradient" />
+                  
+                  <figcaption className="s03-card-content">
+                    <span className="s03-card-num">{cat.number}</span>
+                    <h3 className="s03-card-title">
+                      {cat.name.map((line) => <span key={line}>{line}</span>)}
+                    </h3>
+                    <p className="s03-card-desc">{cat.description}</p>
+                    <i className="s03-card-gold-rule" />
+                  </figcaption>
+                </div>
+              </motion.figure>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

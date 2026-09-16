@@ -18,11 +18,11 @@ export function BlackSheepLogo({ height, size = 36 }) {
 }
 
 const NAV_ITEMS = [
-  { id: 'work', label: 'Work', target: 'selected-work' },
   { id: 'philosophy', label: 'Philosophy', target: 'philosophy' },
   { id: 'worlds', label: 'Worlds', target: 'worlds' },
   { id: 'process', label: 'Process', target: 'process' },
-  { id: 'language', label: 'Materiality', target: 'language' },
+  { id: 'language', label: 'Language', target: 'language' },
+  { id: 'work', label: 'Work', target: 'selected-work' },
   { id: 'contact', label: 'Contact', target: 'contact' },
 ];
 
@@ -87,17 +87,6 @@ export default function RedesignedNavbar({ onNavigate, onOpenMenu }) {
 
           {/* Right Action Controls */}
           <div className="navbar-actions">
-            {/* Consultation CTA Pill */}
-            <button
-              onClick={() => onNavigate('Contact')}
-              className="navbar-cta-btn"
-              aria-label="Inquire or Book Consultation"
-            >
-              <span className="cta-dot" />
-              <span className="cta-text">INQUIRE</span>
-              <ArrowUpRight className="cta-icon" size={15} />
-            </button>
-
             {/* Hamburger Menu Trigger Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
