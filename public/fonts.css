@@ -1,29 +1,81 @@
+/* Header font: Bodoni Moda (Variable) */
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: 'Bodoni Moda';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 900;
   font-display: swap;
-  src: url(/fonts/font-0.woff2) format('truetype');
+  src: url('/fonts/Bodoni_Moda/BodoniModa-VariableFont_opsz,wght.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: 'Bodoni Moda';
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/Bodoni_Moda/BodoniModa-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+}
+
+/* Body font: Be Vietnam Pro */
+@font-face {
+  font-family: 'Be Vietnam Pro';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 100;
   font-display: swap;
-  src: url(/fonts/font-1.woff2) format('truetype');
+  src: url('/fonts/Be_Vietnam_Pro/BeVietnamPro-Thin.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('/fonts/Be_Vietnam_Pro/BeVietnamPro-ExtraLight.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Be Vietnam Pro';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(/fonts/font-2.woff2) format('truetype');
+  src: url('/fonts/Be_Vietnam_Pro/BeVietnamPro-Light.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Be Vietnam Pro';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(/fonts/font-3.woff2) format('truetype');
+  src: url('/fonts/Be_Vietnam_Pro/BeVietnamPro-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Be_Vietnam_Pro/BeVietnamPro-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/Be_Vietnam_Pro/BeVietnamPro-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Be_Vietnam_Pro/BeVietnamPro-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Be_Vietnam_Pro/BeVietnamPro-Italic.ttf') format('truetype');
+}

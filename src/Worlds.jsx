@@ -86,10 +86,6 @@ export default function Worlds() {
           <motion.p className="s03-worlds-intro" {...fade(0.4)}>
             From intimate homes to windows that stop you in your tracks — we shape spaces, moments and experiences with character.
           </motion.p>
-
-          <motion.div className="s03-worlds-bottom-tag" {...fade(0.55)}>
-            <span>SPACES</span><i></i><span>PEOPLE</span><i></i><span>EMOTIONS</span>
-          </motion.div>
         </div>
 
         {/* RIGHT PORTFOLIO AREA (66%): EXACT 4 UNIFORM ARCHED CARDS */}

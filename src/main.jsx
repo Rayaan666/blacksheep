@@ -6,8 +6,6 @@ import './styles.css';
 import RedesignedNavbar from './Navbar';
 import Philosophy from './Philosophy';
 import Worlds from './Worlds';
-import Language from './Language';
-import Process from './Process';
 import SelectedWork from './SelectedWork';
 import Contact from './Contact';
 
@@ -32,7 +30,12 @@ function Overlay({ panel, close, onNavigate }) {
   useEffect(() => { if (panel) ref.current.showModal(); else ref.current.close(); }, [panel]);
   return <dialog ref={ref} className="editorial-dialog" onCancel={close} onClick={e => { if (e.target === ref.current) close(); }}>
     <div className="dialog-inner"><button className="dialog-close" aria-label="Close dialog" onClick={close}><X strokeWidth={1}/></button><p className="eyebrow">BLACK SHEEP DESIGNS</p>
-    {panel === 'Menu' ? <nav aria-label="Expanded navigation">{['Work', 'About', 'Services', 'Journal', 'Contact'].map(item => <button key={item} onClick={() => onNavigate(item)}>{item}<ArrowRight strokeWidth={1}/></button>)}</nav> : <><h2>{panel === 'Story' ? 'Our story.' : panel}</h2><p>{panel === 'Story' ? 'The story film is coming soon.' : panel === 'About' ? 'We craft immersive environments that inspire, engage and leave a lasting impression.' : 'More to discover. Coming soon.'}</p></>}
+    {panel === 'Menu' ? <nav aria-label="Expanded navigation">
+      <button key="Philosophy" onClick={() => onNavigate('Philosophy')}>Philosophy<ArrowRight strokeWidth={1}/></button>
+      <button key="Services" onClick={() => onNavigate('Services')}>Services<ArrowRight strokeWidth={1}/></button>
+      <button key="Work" onClick={() => onNavigate('Work')}>Selected Work<ArrowRight strokeWidth={1}/></button>
+      <button key="Contact" onClick={() => onNavigate('Contact')}>Contact<ArrowRight strokeWidth={1}/></button>
+    </nav> : <><h2>{panel === 'Story' ? 'Our story.' : panel}</h2><p>{panel === 'Story' ? 'The story film is coming soon.' : panel === 'About' ? 'We craft immersive environments that inspire, engage and leave a lasting impression.' : 'More to discover. Coming soon.'}</p></>}
     </div>
   </dialog>;
 }
@@ -42,10 +45,18 @@ function Hero() {
   const mx = useMotionValue(0), my = useMotionValue(0);
   const x = useSpring(mx, { stiffness: 35, damping: 25 }), y = useSpring(my, { stiffness: 35, damping: 25 });
   const tx = useTransform(x, v => -v * .5), ty = useTransform(y, v => -v * .5);
-  const discover = () => { setPanel(null); document.querySelector('#services').scrollIntoView({ behavior: reduce ? 'instant' : 'smooth', block: 'nearest' }); document.querySelector('.service').focus({ preventScroll: true }); };
-  const openPhilosophy = () => { setPanel(null); document.getElementById('philosophy').scrollIntoView({ behavior: reduce ? 'instant' : 'smooth' }); };
-  const openContact = () => { setPanel(null); const c = document.getElementById('contact'); if (c) c.scrollIntoView({ behavior: reduce ? 'instant' : 'smooth' }); else setPanel('Contact'); };
-  const navigate = name => name === 'About' ? openPhilosophy() : name === 'Contact' ? openContact() : ['Work', 'Services'].includes(name) ? discover() : setPanel(name);
+  const openSection = (id) => {
+    setPanel(null);
+    const elem = document.getElementById(id);
+    if (elem) elem.scrollIntoView({ behavior: reduce ? 'instant' : 'smooth' });
+  };
+  const navigate = name => {
+    if (name === 'Philosophy') openSection('philosophy');
+    else if (name === 'Services') openSection('worlds');
+    else if (name === 'Work' || name === 'SelectedWork' || name === 'Selected Work') openSection('selected-work');
+    else if (name === 'Contact') openSection('contact');
+    else setPanel(name);
+  };
   return <main>
     <RedesignedNavbar onNavigate={navigate} onOpenMenu={() => setPanel('Menu')}/>
     <section className="hero relative isolate overflow-hidden flex flex-col items-center justify-center text-center" aria-label="Black Sheep Designs" onPointerMove={e => { if (reduce || e.pointerType !== 'mouse' || innerWidth < 768) return; mx.set((e.clientX / innerWidth - .5) * 6); my.set((e.clientY / innerHeight - .5) * 6); }} onPointerLeave={() => { mx.set(0); my.set(0); }}>
@@ -62,12 +73,12 @@ function Hero() {
         ))}
       </h1>
       <motion.div {...reveal(.85)} className="mt-8 flex justify-center">
-        <button className="hero-cta-btn" onClick={openContact}>
+        <button className="hero-cta-btn" onClick={() => navigate('Work')}>
           <span>EXPLORE OUR WORK</span>
           <ArrowRight size={18} strokeWidth={1.2}/>
         </button>
       </motion.div>
     </motion.div>
-  </section><Philosophy/><Worlds/><Process/><Language/><SelectedWork/><Contact onNavigate={navigate}/><Overlay panel={panel} close={() => setPanel(null)} onNavigate={navigate}/></main>;
+  </section><Philosophy/><Worlds/><SelectedWork/><Contact onNavigate={navigate}/><Overlay panel={panel} close={() => setPanel(null)} onNavigate={navigate}/></main>;
 }
 createRoot(document.getElementById('root')).render(<React.StrictMode><MotionConfig reducedMotion="user"><Hero/></MotionConfig></React.StrictMode>);

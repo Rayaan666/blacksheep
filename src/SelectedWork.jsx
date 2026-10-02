@@ -39,13 +39,10 @@ export default function SelectedWork() {
   <div className="selected-paper" aria-hidden="true"/>
   <motion.div className="selected-label" initial={{opacity:0}} animate={visible?{opacity:1}:{}} transition={{duration:1}}><span>06 / SELECTED WORK</span><i/></motion.div>
   <h2 className="selected-headline" id="selected-work-title">{['SPACES WITH','something','to say.'].map((line,i)=><span className="selected-headline-line" key={line}><motion.span initial={{y:still?0:'110%'}} animate={visible?{y:0}:{}} transition={{duration:1.1,delay:i*.12,ease}}>{line}</motion.span></span>)}</h2>
-  <motion.p className="selected-support" initial={{opacity:0,y:still?0:10}} animate={visible?{opacity:1,y:0}:{}} transition={{duration:1,delay:.35,ease}}>PEOPLE. PLACES. PURPOSE.<br/>BEAUTIFULLY CONNECTED.</motion.p>
   <motion.button className="selected-explore" onClick={explore} initial={{opacity:0,scale:still?1:.92}} animate={visible?{opacity:1,scale:1}:{}} transition={{duration:1,delay:.45,ease}}><span>EXPLORE</span><ArrowRight size={26} strokeWidth={.8}/></motion.button>
   <svg className="selected-gold-curve" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-hidden="true"><path d="M556 26H579M490 430C337 491 354 807 643 813" fill="none" stroke="currentColor" strokeWidth="1" vectorEffect="non-scaling-stroke"/><circle cx="556" cy="26" r="2"/><circle cx="643" cy="813" r="2"/></svg>
   <div className="selected-gallery" aria-label="Selected projects">{projects.map((project,index)=><Project key={project.id} {...{project,index,visible,still}} progress={scrollYProgress} onOpen={setPreview}/>)}</div>
   <svg className="selected-corner" viewBox="1508 378 164 149" preserveAspectRatio="none" aria-hidden="true"><defs><clipPath id="selected-corner-mask"><path d="M1508 444C1576 421 1625 388 1672 378V524C1612 470 1559 446 1508 444Z"/></clipPath></defs><image href={asset} width="1672" height="941" clipPath="url(#selected-corner-mask)" preserveAspectRatio="none"/></svg>
-  <motion.div className="selected-handwritten" initial={{opacity:0}} animate={visible?{opacity:1}:{}} transition={{duration:1,delay:1.1}} aria-hidden="true">Design<br/><span>for a more</span><br/><span>human tomorrow.</span><i/></motion.div>
-  <div className="selected-top-micro" aria-hidden="true">SPACES<br/>PEOPLE<br/>STORIES<br/>BEYOND<br/>THE ORDINARY</div>
   <div className="selected-footer-left" aria-hidden="true">THOUGHTFUL DESIGN<br/>TIMELESS SPACES<i/></div>
   <div className="selected-footer-right" aria-hidden="true"><i/>A MORE BEAUTIFUL TOMORROW</div>
   <ProjectViewer project={preview} close={()=>setPreview(null)} progress={scrollYProgress}/>

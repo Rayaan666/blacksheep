@@ -19,10 +19,8 @@ export function BlackSheepLogo({ height, size = 36 }) {
 
 const NAV_ITEMS = [
   { id: 'philosophy', label: 'Philosophy', target: 'philosophy' },
-  { id: 'worlds', label: 'Worlds', target: 'worlds' },
-  { id: 'process', label: 'Process', target: 'process' },
-  { id: 'language', label: 'Language', target: 'language' },
-  { id: 'work', label: 'Work', target: 'selected-work' },
+  { id: 'worlds', label: 'Services', target: 'worlds' },
+  { id: 'work', label: 'Selected Work', target: 'selected-work' },
   { id: 'contact', label: 'Contact', target: 'contact' },
 ];
 
@@ -53,17 +51,23 @@ export default function RedesignedNavbar({ onNavigate, onOpenMenu }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
   const handleNavClick = (item) => {
     setMenuOpen(false);
-    if (item.target === 'contact') {
-      onNavigate('Contact');
-      return;
-    }
-
     const elem = document.getElementById(item.target);
     if (elem) {
       elem.scrollIntoView({ behavior: 'smooth' });
-    } else {
+    } else if (onNavigate) {
       onNavigate(item.label);
     }
   };

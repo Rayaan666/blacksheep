@@ -1,9 +1,31 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { Mail, Phone, MapPin, ArrowRight, Instagram, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, Instagram, Linkedin, X, Cookie } from 'lucide-react';
 import './contact.css';
 
 const ease = [0.16, 1, 0.3, 1];
+
+function CookieIcon(props) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={props.size || 22}
+      height={props.size || 22}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.4}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5z" />
+      <path d="M8.5 8.5v.01" strokeWidth={2.5} />
+      <path d="M16 15.5v.01" strokeWidth={2.5} />
+      <path d="M12 12v.01" strokeWidth={2.5} />
+      <path d="M11 17v.01" strokeWidth={2.5} />
+    </svg>
+  );
+}
 
 function PinterestIcon(props) {
   return (
@@ -25,6 +47,9 @@ function PinterestIcon(props) {
 }
 
 export default function Contact({ onNavigate }) {
+  const [activeModal, setActiveModal] = useState(null);
+  const [showCookieBanner, setShowCookieBanner] = useState(true);
+  const [cookieSettings, setCookieSettings] = useState({ analytics: true, functional: true });
   const sectionRef = useRef(null);
   const visible = useInView(sectionRef, { once: true, amount: 0.1 });
   const reduced = useReducedMotion();
@@ -55,123 +80,104 @@ export default function Contact({ onNavigate }) {
       className="contact-section relative isolate"
       aria-labelledby="contact-headline-id"
     >
-      {/* Background Plate Artwork (Seamless clean render) */}
-      <motion.img
-        src="/images/contact-clean-plate.png"
-        alt="Architectural luxury interior with stone arch and raw travertine console"
-        className="contact-bg-plate"
-        style={{ y: reduced ? 0 : archY }}
-        initial={{ opacity: 0 }}
-        animate={visible ? { opacity: 1 } : {}}
-        transition={{ duration: 1.2, ease }}
-      />
-      <div className="contact-bg-overlay" aria-hidden="true" />
-
       {/* Subtle Grain Texture Overlay */}
       <div className="contact-grain" aria-hidden="true" />
 
-      {/* 06. Section Label */}
-      <motion.div
-        className="contact-section-label"
-        initial={{ opacity: 0, y: 10 }}
-        animate={visible ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.9, delay: 0.15, ease }}
-      >
-        07 / LET’S TALK
-      </motion.div>
+      {/* Upper Let's Talk Section with Hero Background */}
+      <div className="contact-hero-wrapper">
+        <div className="contact-bg-image-wrap" aria-hidden="true">
+          <motion.img
+            src="/hero.png"
+            alt=""
+            className="contact-bg-image"
+            style={{ y: reduced ? 0 : archY }}
+          />
+        </div>
 
-      {/* 07. Main Headline */}
-      <h2 id="contact-headline-id" className="contact-headline">
-        <span className="contact-headline-line contact-headline-primary">
-          <motion.span
-            initial={{ y: reduced ? 0 : '110%' }}
-            animate={visible ? { y: 0 } : {}}
-            transition={{ duration: 1.15, delay: 0.22, ease }}
-          >
-            LET’S CREATE
-          </motion.span>
-        </span>
-        <span className="contact-headline-line contact-headline-italic">
-          <motion.span
-            initial={{ y: reduced ? 0 : '110%' }}
-            animate={visible ? { y: 0 } : {}}
-            transition={{ duration: 1.15, delay: 0.34, ease }}
-          >
-            something
-          </motion.span>
-        </span>
-        <span className="contact-headline-line contact-headline-italic">
-          <motion.span
-            initial={{ y: reduced ? 0 : '110%' }}
-            animate={visible ? { y: 0 } : {}}
-            transition={{ duration: 1.15, delay: 0.46, ease }}
-          >
-            worth feeling.
-          </motion.span>
-        </span>
-      </h2>
+        {/* Main Centered Call-To-Action Section */}
+        <div className="contact-centered-hero">
 
-      {/* 08. Supporting Copy */}
-      <motion.p
-        className="contact-support-copy"
-        initial={{ opacity: 0, y: 12 }}
-        animate={visible ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 1, delay: 0.58, ease }}
-      >
-        HAVE A SPACE, STORY OR IDEA IN MIND?
-        <br />
-        WE’D LOVE TO HEAR ABOUT IT.
-      </motion.p>
+        {/* Decorative Gold Crest Accent */}
+        <div className="contact-crest-line" aria-hidden="true">
+          <i className="crest-rule-left" />
+          <span className="crest-diamond">◆</span>
+          <i className="crest-rule-right" />
+        </div>
 
-      {/* 09 & 10. Primary CTA Circle + Micro Copy */}
-      <motion.div
-        className="contact-cta-group"
-        initial={{ opacity: 0, scale: reduced ? 1 : 0.95 }}
-        animate={visible ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 0.9, delay: 0.68, ease }}
-      >
-        <a
-          href="mailto:hello@blacksheep.ae"
-          onClick={handleStartProject}
-          className="contact-cta-circle"
-          aria-label="Start a project with Black Sheep Designs"
+        {/* Section Label */}
+        <motion.div
+          className="contact-section-label-centered"
+          initial={{ opacity: 0, y: 10 }}
+          animate={visible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9, delay: 0.15, ease }}
         >
-          <span>START A</span>
-          <span>PROJECT</span>
-        </a>
+          07 / LET’S TALK
+        </motion.div>
 
-        <div className="contact-cta-arrow" aria-hidden="true">
-          <ArrowRight size={22} strokeWidth={1} />
-        </div>
+        {/* Main Centered Headline */}
+        <h2 id="contact-headline-id" className="contact-headline-centered">
+          <span className="contact-headline-line contact-headline-primary">
+            <motion.span
+              initial={{ y: reduced ? 0 : '110%' }}
+              animate={visible ? { y: 0 } : {}}
+              transition={{ duration: 1.15, delay: 0.22, ease }}
+            >
+              LET’S CREATE
+            </motion.span>
+          </span>
+          <span className="contact-headline-line contact-headline-italic">
+            <motion.span
+              initial={{ y: reduced ? 0 : '110%' }}
+              animate={visible ? { y: 0 } : {}}
+              transition={{ duration: 1.15, delay: 0.34, ease }}
+            >
+              something
+            </motion.span>
+          </span>
+          <span className="contact-headline-line contact-headline-italic-secondary">
+            <motion.span
+              initial={{ y: reduced ? 0 : '110%' }}
+              animate={visible ? { y: 0 } : {}}
+              transition={{ duration: 1.15, delay: 0.46, ease }}
+            >
+              worth feeling.
+            </motion.span>
+          </span>
+        </h2>
 
-        <div className="contact-cta-divider" aria-hidden="true" />
+        {/* Supporting Copy */}
+        <motion.p
+          className="contact-support-copy-centered"
+          initial={{ opacity: 0, y: 12 }}
+          animate={visible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1, delay: 0.58, ease }}
+        >
+          HAVE A SPACE, STORY OR IDEA IN MIND?
+          <br />
+          WE’D LOVE TO HEAR ABOUT IT.
+        </motion.p>
 
-        <div className="contact-cta-micro" aria-hidden="true">
-          <span>SPACES</span>
-          <span>PEOPLE</span>
-          <span>IDEAS</span>
-          <span>EXPERIENCES</span>
-          <span>TOGETHER.</span>
-        </div>
-      </motion.div>
-
-      {/* 16. Right Architectural Wall Manifesto */}
-      <div className="contact-wall-manifesto" aria-hidden="true">
-        <span>GOOD</span>
-        <span>DESIGN</span>
-        <span>CREATES</span>
-        <span>A BRIGHTER</span>
-        <span>TOMORROW.</span>
-        <i />
+        {/* Primary CTA Button */}
+        <motion.div
+          className="contact-cta-centered-group"
+          initial={{ opacity: 0, scale: reduced ? 1 : 0.95 }}
+          animate={visible ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.9, delay: 0.68, ease }}
+        >
+          <a
+            href="mailto:hello@blacksheep.ae"
+            onClick={handleStartProject}
+            className="contact-cta-circle-centered"
+            aria-label="Start a project with Black Sheep Designs"
+          >
+            <div className="contact-cta-inner-ring">
+              <span>START A</span>
+              <span>PROJECT</span>
+              <ArrowRight size={18} strokeWidth={1.2} className="cta-arrow-icon" />
+            </div>
+          </a>
+        </motion.div>
       </div>
-
-      {/* Dedicated Mobile Architectural View */}
-      <div className="contact-mobile-arch">
-        <img
-          src="/images/contact-arch.png"
-          alt="Atmospheric architectural archway with stone console and botanical branch"
-          loading="lazy"
-        />
       </div>
 
       {/* 18. Contact Information & Quick Links Footer Grid */}
@@ -212,8 +218,6 @@ export default function Contact({ onNavigate }) {
           <ul className="contact-footer-nav-list">
             <li><a href="#worlds" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('Worlds'); }}>WORLDS</a></li>
             <li><a href="#philosophy" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('Philosophy'); }}>PHILOSOPHY</a></li>
-            <li><a href="#process" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('Process'); }}>PROCESS</a></li>
-            <li><a href="#language" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('Language'); }}>LANGUAGE</a></li>
             <li><a href="#work" onClick={(e) => { e.preventDefault(); onNavigate && onNavigate('SelectedWork'); }}>PROJECTS</a></li>
           </ul>
         </div>
@@ -284,11 +288,178 @@ export default function Contact({ onNavigate }) {
           © {new Date().getFullYear()} BLACK SHEEP DESIGNS FZ-LLC. ALL RIGHTS RESERVED.
         </span>
         <nav className="contact-legal-links" aria-label="Legal navigation">
-          <a href="#" className="contact-legal-link">PRIVACY POLICY</a>
-          <a href="#" className="contact-legal-link">TERMS OF SERVICE</a>
-          <a href="#" className="contact-legal-link">COOKIE PREFERENCES</a>
+          <button onClick={() => setActiveModal('privacy')} className="contact-legal-btn">PRIVACY POLICY</button>
+          <button onClick={() => setActiveModal('terms')} className="contact-legal-btn">TERMS &amp; CONDITIONS</button>
+          <button onClick={() => setActiveModal('cookies')} className="contact-legal-btn">COOKIE PREFERENCES</button>
         </nav>
       </div>
+
+      {/* Interactive Legal Modal Dialog */}
+      {activeModal && (
+        <div className="contact-modal-backdrop" onClick={() => setActiveModal(null)} role="dialog" aria-modal="true">
+          <div className="contact-modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-modal-header">
+              <span className="contact-modal-eyebrow">BLACK SHEEP DESIGNS FZ-LLC</span>
+              <button className="contact-modal-close" onClick={() => setActiveModal(null)} aria-label="Close modal">
+                <X size={18} strokeWidth={1.2} />
+              </button>
+            </div>
+
+            <div className="contact-modal-body">
+              {activeModal === 'privacy' && (
+                <>
+                  <h2>PRIVACY POLICY</h2>
+                  <p className="modal-lead">Your privacy is fundamental to our client relationship. This policy details how Black Sheep Designs collects, utilizes, and safeguards information across our digital platforms.</p>
+                  
+                  <div className="modal-section">
+                    <h3>1. INFORMATION WE COLLECT</h3>
+                    <p>We collect information provided directly by you when submitting project inquiries, subscribing to publications, or communicating with our studio—including your name, email address, telephone number, company, and project scope details.</p>
+                  </div>
+                  
+                  <div className="modal-section">
+                    <h3>2. USE OF INFORMATION</h3>
+                    <p>Information gathered is utilized exclusively to respond to inquiries, deliver bespoke interior architecture consulting, coordinate project engagements, and provide relevant studio announcements.</p>
+                  </div>
+                  
+                  <div className="modal-section">
+                    <h3>3. DATA SECURITY &amp; CONFIDENTIALITY</h3>
+                    <p>We implement rigorous organizational and technical measures to prevent unauthorized access, disclosure, or modification of client records and confidential project specifications.</p>
+                  </div>
+
+                  <div className="modal-section">
+                    <h3>4. CONTACT &amp; ENQUIRIES</h3>
+                    <p>For inquiries regarding data protection, please contact our studio privacy officer at <a href="mailto:privacy@blacksheep.ae" className="modal-link">privacy@blacksheep.ae</a> or Dubai, United Arab Emirates.</p>
+                  </div>
+                </>
+              )}
+
+              {activeModal === 'terms' && (
+                <>
+                  <h2>TERMS &amp; CONDITIONS</h2>
+                  <p className="modal-lead">Welcome to Black Sheep Designs. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions of engagement.</p>
+                  
+                  <div className="modal-section">
+                    <h3>1. INTELLECTUAL PROPERTY</h3>
+                    <p>All concepts, 3D renders, architectural drawings, photography, graphic assets, and editorial copy displayed on this site are the exclusive intellectual property of Black Sheep Designs FZ-LLC. Reproduction or commercial use without prior written consent is strictly prohibited.</p>
+                  </div>
+                  
+                  <div className="modal-section">
+                    <h3>2. SCOPE OF SERVICES</h3>
+                    <p>Digital representations and portfolio showcases on this site are provided for illustrative purposes. Formal design commissions, deliverables, timelines, and commercial terms are defined strictly in signed client agreements.</p>
+                  </div>
+                  
+                  <div className="modal-section">
+                    <h3>3. LIMITATION OF LIABILITY</h3>
+                    <p>While we endeavor to keep all information current and accurate, Black Sheep Designs makes no warranties regarding uninterrupted website operation or third-party hyperlinked content.</p>
+                  </div>
+
+                  <div className="modal-section">
+                    <h3>4. GOVERNING LAW</h3>
+                    <p>These terms are governed by and construed in accordance with the laws of the United Arab Emirates as applicable in the Emirate of Dubai.</p>
+                  </div>
+                </>
+              )}
+
+              {activeModal === 'cookies' && (
+                <>
+                  <h2>COOKIE PREFERENCES</h2>
+                  <p className="modal-lead">We use cookies to ensure seamless navigation, analyze site interaction, and enhance your digital experience across our platforms.</p>
+
+                  <div className="cookie-toggle-row">
+                    <div className="cookie-info">
+                      <h3>ESSENTIAL COOKIES</h3>
+                      <p>Required for fundamental site functionality, secure sessions, font rendering, and layout integrity. Cannot be disabled.</p>
+                    </div>
+                    <span className="cookie-badge-active">ALWAYS ACTIVE</span>
+                  </div>
+
+                  <div className="cookie-toggle-row">
+                    <div className="cookie-info">
+                      <h3>PERFORMANCE &amp; ANALYTICS</h3>
+                      <p>Help us analyze visitor traffic and interactions across our portfolio sections to optimize load speed and responsiveness.</p>
+                    </div>
+                    <button
+                      className={`cookie-switch ${cookieSettings.analytics ? 'is-on' : ''}`}
+                      onClick={() => setCookieSettings(prev => ({ ...prev, analytics: !prev.analytics }))}
+                    >
+                      <span>{cookieSettings.analytics ? 'ENABLED' : 'DISABLED'}</span>
+                    </button>
+                  </div>
+
+                  <div className="cookie-toggle-row">
+                    <div className="cookie-info">
+                      <h3>FUNCTIONAL &amp; PREFERENCES</h3>
+                      <p>Remembers your navigation states, accessibility settings, and video playback options.</p>
+                    </div>
+                    <button
+                      className={`cookie-switch ${cookieSettings.functional ? 'is-on' : ''}`}
+                      onClick={() => setCookieSettings(prev => ({ ...prev, functional: !prev.functional }))}
+                    >
+                      <span>{cookieSettings.functional ? 'ENABLED' : 'DISABLED'}</span>
+                    </button>
+                  </div>
+
+                  <div className="cookie-action-bar">
+                    <button className="cookie-save-btn" onClick={() => setActiveModal(null)}>
+                      SAVE PREFERENCES
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reference-Style Cookie Popup Banner */}
+      {showCookieBanner && (
+        <div className="bs-cookie-banner" role="dialog" aria-label="Cookie Preferences">
+          <div className="bs-cookie-banner-header">
+            <div className="bs-cookie-banner-title-group">
+              <div className="bs-cookie-icon-box">
+                <CookieIcon size={20} />
+              </div>
+              <div>
+                <h3 className="bs-cookie-banner-title">Cookie Preferences</h3>
+                <span className="bs-cookie-banner-subtitle">BLACK SHEEP DESIGNS</span>
+              </div>
+            </div>
+            <button
+              className="bs-cookie-close-btn"
+              onClick={() => setShowCookieBanner(false)}
+              aria-label="Close cookie banner"
+            >
+              <X size={16} strokeWidth={1.5} />
+            </button>
+          </div>
+
+          <p className="bs-cookie-banner-text">
+            We use cookies and analytics tools to personalize content, monitor website traffic, and ensure seamless registration. Review our{' '}
+            <button
+              className="bs-cookie-link-btn"
+              onClick={() => setActiveModal('privacy')}
+            >
+              Privacy Policy
+            </button>{' '}
+            for details.
+          </p>
+
+          <div className="bs-cookie-banner-actions">
+            <button
+              className="bs-cookie-btn-primary"
+              onClick={() => setShowCookieBanner(false)}
+            >
+              ACCEPT ALL
+            </button>
+            <button
+              className="bs-cookie-btn-secondary"
+              onClick={() => setShowCookieBanner(false)}
+            >
+              NECESSARY ONLY
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

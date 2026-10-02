@@ -44,71 +44,62 @@ export default function Philosophy() {
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   
-  const mainY = useTransform(scrollYProgress, [0, 1], [15, -15]);
-  const detailY = useTransform(scrollYProgress, [0, 1], [25, -25]);
+  const mainY = useTransform(scrollYProgress, [0, 1], [10, -10]);
+  const detailY = useTransform(scrollYProgress, [0, 1], [15, -15]);
 
   return (
     <RevealContext.Provider value={visible}>
-      <section ref={ref} id="philosophy" className="philosophy" aria-labelledby="philosophy-title">
-        
-        {/* Left Zone: Editorial */}
-        <div className="ph-zone-left">
-          <motion.div className="ph-label" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={viewport} transition={{ duration: 1 }}>
-            <span>02 / PHILOSOPHY</span><i/>
-          </motion.div>
-          
-          <h2 id="philosophy-title" className="ph-headline">
-            {['CRAFTING', 'spaces that', 'MAKE YOU FEEL', 'SOMETHING.'].map((line, i) => (
-              <span className={`ph-headline-line ${i === 1 ? 'ph-italic' : ''}`} key={line}>
-                <motion.span initial={{ y: reduced ? 0 : '110%' }} animate={visible ? { y: 0 } : {}} transition={{ duration: 1.15, delay: i * .1, ease }}>
-                  {line}
-                </motion.span>
-              </span>
-            ))}
-          </h2>
-          
-          <motion.div className="ph-intro" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={viewport} transition={{ duration: 1, delay: .2, ease }}>
-            <p>Because every space tells a story —<br/>a story of people, purpose and possibility.<br/>Designing with intention, creating environments<br className="ph-copy-break"/> that stir emotion and stand the test of time.</p>
-            <button className="ph-approach">
-              <span><ArrowRight size={26} strokeWidth={.8}/></span>OUR APPROACH
-            </button>
-          </motion.div>
-          
-          <div className="ph-micro-left" aria-hidden="true">
-            <span>MORE<br/>THAN SPACES</span><i/>
+      <section ref={ref} id="philosophy" className="philosophy-section" aria-labelledby="philosophy-title">
+        {/* Outer antique-gold rectangular outline offset into burgundy */}
+        <div className="ph-outer-frame">
+          {/* Inner ivory panel (87-90% section width, exact ivory #eee6da) */}
+          <div className="ph-ivory-panel">
+            {/* Delicate antique-gold rectangular outline inset 25-30px inside ivory panel */}
+            <div className="ph-inner-frame">
+              {/* Editorial composition */}
+              <div className="ph-content-grid">
+                
+                {/* Left Zone: Editorial */}
+                <div className="ph-zone-left">
+                  <motion.div className="ph-label" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={viewport} transition={{ duration: 1 }}>
+                    <span>02 / PHILOSOPHY</span><i/>
+                  </motion.div>
+                  
+                  <h2 id="philosophy-title" className="ph-headline">
+                    {['CRAFTING', 'spaces that', 'MAKE YOU FEEL', 'SOMETHING.'].map((line, i) => (
+                      <span className={`ph-headline-line ${i === 1 ? 'ph-italic' : ''}`} key={line}>
+                        <motion.span initial={{ y: reduced ? 0 : '110%' }} animate={visible ? { y: 0 } : {}} transition={{ duration: 1.15, delay: i * .1, ease }}>
+                          {line}
+                        </motion.span>
+                      </span>
+                    ))}
+                  </h2>
+                  
+                  <motion.div className="ph-intro" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={viewport} transition={{ duration: 1, delay: .2, ease }}>
+                    <p>Because every space tells a story —<br/>a story of people, purpose and possibility.<br/>Designing with intention, creating environments<br className="ph-copy-break"/> that stir emotion and stand the test of time.</p>
+                    <button className="ph-approach">
+                      <span><ArrowRight size={24} strokeWidth={.8}/></span>OUR APPROACH
+                    </button>
+                  </motion.div>
+                </div>
+                  
+                {/* Center-Right Zone: Main Arch Photograph */}
+                <div className="ph-zone-center">
+                  <Photograph name="main" crop="646 0 366 557" label="Sunlit plaster arches, bronze pendant lights" y={mainY} />
+                </div>
+
+                {/* Upper-Right Zone: Detail Image */}
+                <div className="ph-zone-right">
+                  <div className="ph-detail-wrapper">
+                     <div className="ph-gold-outline" />
+                     <Photograph name="detail" crop="1289 263 161 187" label="Material details" y={detailY} delay={0.2} />
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Center-Right Zone: Main Arch Photograph */}
-        <div className="ph-zone-center">
-          <Photograph name="main" crop="646 0 366 557" label="Sunlit plaster arches, bronze pendant lights" y={mainY} />
-        </div>
-
-        {/* Far-Right Zone: Detail Image + Quote */}
-        <div className="ph-zone-right">
-          <div className="ph-detail-wrapper">
-             <div className="ph-gold-outline" />
-             <Photograph name="detail" crop="1289 263 161 187" label="Material details" y={detailY} delay={0.2} />
-          </div>
-          <div className="ph-quote-wrapper">
-            <span className="ph-quote-line" />
-            <p className="ph-quote-text">
-              The luxury comes<br/>from restraint.
-            </p>
-          </div>
-          <div className="ph-micro-right" aria-hidden="true">
-            <span>A MORE</span><div><i/>BEAUTIFUL TOMORROW</div>
-          </div>
-        </div>
-
-        {/* Footer Line */}
-        <div className="ph-footer-line" aria-hidden="true">
-          <i className="ph-footer-rule"/>
-          <span>SPACES — PEOPLE — EMOTIONS</span>
-          <i className="ph-footer-rule"/>
-        </div>
-
-
       </section>
     </RevealContext.Provider>
   );

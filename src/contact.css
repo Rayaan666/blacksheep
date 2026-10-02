@@ -7,126 +7,116 @@
   isolation: isolate;
   overflow: hidden;
   width: 100%;
-  height: max(880px, 100svh);
-  min-height: 880px;
-  background: radial-gradient(ellipse at 35% 45%, #3a080f 0%, #290509 60%, #1a0305 100%);
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 40%, #350508 0%, #220306 60%, #140204 100%);
   color: #f0e7d9;
-  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
   --ivory: #f0e7d9;
   --gold: #cbb180;
   --gold-muted: #9d8155;
   --gold-line: rgba(203, 177, 128, 0.38);
   --burgundy: #3a070c;
   --burgundy-dark: #1b0305;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif: 'Bodoni Moda', Georgia, serif;
+  --sans: 'Be Vietnam Pro', sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* --------------------------------------------------------------------------
-   BACKGROUND ARTWORK & GRAIN
-   -------------------------------------------------------------------------- */
-.contact-bg-plate {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  pointer-events: none;
-  z-index: 1;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 50%, rgba(0, 0, 0, 0) 80%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 50%, rgba(0, 0, 0, 0) 80%);
-}
-
-.contact-bg-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  background: linear-gradient(180deg, transparent 0%, transparent 45%, rgba(35, 5, 9, 0.7) 70%, #1a0305 100%);
-}
-
+/* Subtle Grain Texture Overlay */
 .contact-grain {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 20;
+  z-index: 2;
   opacity: 0.022;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
 }
 
 /* --------------------------------------------------------------------------
-   05. TOP BRAND BAR
+   CENTERED HERO CALL-TO-ACTION SECTION (LET'S TALK HERO WITH BG IMAGE)
    -------------------------------------------------------------------------- */
-.contact-top-brand {
+.contact-hero-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.contact-bg-image-wrap {
   position: absolute;
-  left: 3.8%;
-  top: 3.6%;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.contact-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  filter: none;
+}
+
+.contact-centered-hero {
+  position: relative;
+  z-index: 10;
   display: flex;
   flex-direction: column;
-  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 920px;
+  padding: clamp(70px, 9vw, 130px) 24px clamp(50px, 6vw, 90px);
+  box-sizing: border-box;
 }
 
-.contact-top-brand > span {
-  font: 400 1.38cqw/1.15 var(--serif);
-  letter-spacing: 0.18em;
-  color: var(--ivory);
-}
-
-.contact-top-brand small {
-  font: 400 0.72cqw/1 var(--sans);
-  letter-spacing: 0.58em;
+/* Decorative Gold Crest Accent */
+.contact-crest-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 22px;
   color: var(--gold);
-  margin-top: 4px;
 }
 
-.contact-top-line {
-  position: absolute;
-  left: 15.6%;
-  top: 4.8%;
-  width: 51.5%;
+.crest-rule-left,
+.crest-rule-right {
+  display: inline-block;
+  width: clamp(35px, 4vw, 60px);
   height: 1px;
   background: var(--gold-line);
-  z-index: 10;
 }
 
-.contact-top-nav {
-  position: absolute;
-  right: 3.8%;
-  top: 4.2%;
-  font: 400 0.56cqw/1 var(--sans);
+.crest-diamond {
+  font-size: 8px;
+  color: var(--gold);
+  line-height: 1;
+}
+
+/* Section Eyebrow Label */
+.contact-section-label-centered {
+  font: 400 clamp(10px, 0.72vw, 12.5px)/1 var(--sans);
   letter-spacing: 0.28em;
   color: var(--gold);
   text-transform: uppercase;
-  z-index: 10;
-  white-space: nowrap;
+  margin-bottom: clamp(20px, 2.5vh, 28px);
+  text-align: center;
 }
 
-/* --------------------------------------------------------------------------
-   06. SECTION LABEL
-   -------------------------------------------------------------------------- */
-.contact-section-label {
-  position: absolute;
-  left: 3.8%;
-  top: 4.8%;
-  font: 400 0.72cqw/1 var(--sans);
-  letter-spacing: 0.24em;
-  color: var(--gold);
-  text-transform: uppercase;
-  z-index: 10;
-}
-
-/* --------------------------------------------------------------------------
-   07. MAIN HEADLINE
-   -------------------------------------------------------------------------- */
-.contact-headline {
-  position: absolute;
-  left: 3.8%;
-  top: 8.5%;
-  max-width: 48%;
-  margin: 0;
-  z-index: 10;
+/* Main Centered Editorial Headline */
+.contact-headline-centered {
+  margin: 0 0 clamp(20px, 2.5vh, 32px) 0;
+  text-align: center;
+  font-weight: 400;
 }
 
 .contact-headline-line {
@@ -141,154 +131,123 @@
 }
 
 .contact-headline-primary {
-  font: 400 6.2cqw/0.9 var(--serif);
-  letter-spacing: -0.045em;
+  font: 400 clamp(42px, 5.8vw, 86px)/0.92 var(--serif);
+  letter-spacing: -0.04em;
   color: var(--ivory);
   text-transform: uppercase;
+  display: block;
 }
 
 .contact-headline-italic {
-  font-family: var(--serif);
+  font: 400 clamp(42px, 5.8vw, 86px)/0.92 var(--serif);
   font-style: italic;
-  font-weight: 400;
-  font-size: 5.6cqw;
-  line-height: 0.92;
-  letter-spacing: -0.025em;
-  color: var(--ivory);
-  padding-left: 0.05em;
+  letter-spacing: -0.02em;
+  color: var(--gold);
+  display: block;
 }
 
-/* --------------------------------------------------------------------------
-   08. SUPPORTING COPY
-   -------------------------------------------------------------------------- */
-.contact-support-copy {
-  position: absolute;
-  left: 3.8%;
-  top: 35%;
-  width: 42%;
-  margin: 0;
-  font: 400 0.82cqw/1.7 var(--sans);
-  letter-spacing: 0.15em;
+.contact-headline-italic-secondary {
+  font: 400 clamp(42px, 5.8vw, 86px)/0.92 var(--serif);
+  font-style: italic;
+  letter-spacing: -0.02em;
+  color: var(--ivory);
+  display: block;
+}
+
+/* Centered Supporting Copy */
+.contact-support-copy-centered {
+  font: 400 clamp(12px, 0.85vw, 14.5px)/1.8 var(--sans);
+  letter-spacing: 0.16em;
   color: #d8cab7;
   text-transform: uppercase;
-  z-index: 10;
+  margin: 0 0 clamp(32px, 4vh, 48px) 0;
+  max-width: 580px;
+  text-align: center;
 }
 
-/* --------------------------------------------------------------------------
-   09 & 10. PRIMARY CTA + MICRO STACK
-   -------------------------------------------------------------------------- */
-.contact-cta-group {
-  position: absolute;
-  left: 3.8%;
-  top: 44%;
+/* Centered Primary CTA Circle */
+.contact-cta-centered-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.contact-cta-circle-centered {
+  width: clamp(120px, 10vw, 145px);
+  height: clamp(120px, 10vw, 145px);
+  border-radius: 50%;
+  border: 1px solid rgba(203, 177, 128, 0.55);
   display: flex;
   align-items: center;
-  z-index: 10;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.5s var(--ease);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-.contact-cta-circle {
-  width: 6.7cqw;
-  height: 6.7cqw;
-  min-width: 95px;
-  min-height: 95px;
-  max-width: 125px;
-  max-height: 125px;
-  border: 1px solid var(--gold);
+.contact-cta-inner-ring {
+  width: calc(100% - 14px);
+  height: calc(100% - 14px);
   border-radius: 50%;
-  background: transparent;
+  border: 1px dashed rgba(203, 177, 128, 0.35);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  font: 400 0.65cqw/1.35 var(--sans);
-  letter-spacing: 0.2em;
   color: var(--ivory);
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.5s var(--ease), color 0.5s var(--ease), transform 0.5s var(--ease);
-}
-
-.contact-cta-circle:hover {
-  background: var(--ivory);
-  color: var(--burgundy);
-  transform: scale(1.03);
-}
-
-.contact-cta-arrow {
-  margin-left: 1.3cqw;
-  display: flex;
-  align-items: center;
-  color: var(--gold);
-  transition: transform 0.5s var(--ease);
-}
-
-.contact-cta-circle:hover ~ .contact-cta-arrow,
-.contact-cta-arrow:hover {
-  transform: translateX(6px);
-}
-
-.contact-cta-divider {
-  margin-left: 2.2cqw;
-  width: 1px;
-  height: 3.4cqw;
-  min-height: 48px;
-  background: var(--gold-line);
-}
-
-.contact-cta-micro {
-  margin-left: 1.3cqw;
-  display: flex;
-  flex-direction: column;
-  font: 400 0.53cqw/1.65 var(--sans);
+  font: 400 clamp(9.5px, 0.7vw, 11px)/1.35 var(--sans);
   letter-spacing: 0.22em;
-  color: var(--gold);
   text-transform: uppercase;
+  transition: all 0.5s var(--ease);
+}
+
+.cta-arrow-icon {
+  margin-top: 6px;
+  color: var(--gold);
+  transition: transform 0.4s var(--ease);
+}
+
+.contact-cta-circle-centered:hover {
+  border-color: var(--ivory);
+  background: rgba(240, 231, 217, 0.08);
+  transform: scale(1.06);
+  box-shadow: 0 12px 32px rgba(203, 177, 128, 0.15);
+}
+
+.contact-cta-circle-centered:hover .contact-cta-inner-ring {
+  border-color: var(--gold);
+}
+
+.contact-cta-circle-centered:hover .cta-arrow-icon {
+  transform: translateX(4px);
 }
 
 /* --------------------------------------------------------------------------
-   16. ARCHITECTURAL WALL MANIFESTO (ACCESSIBILITY OVERLAY)
+   FOOTER CONTAINER & LINKS
    -------------------------------------------------------------------------- */
-.contact-wall-manifesto {
-  position: absolute;
-  right: 21.2%;
-  top: 25.8%;
+.contact-footer-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  font: 400 0.5cqw/1.65 var(--sans);
-  letter-spacing: 0.26em;
-  color: #927552;
-  text-transform: uppercase;
-  z-index: 5;
-  pointer-events: none;
+  position: relative;
+  z-index: 10;
+  margin-top: auto;
 }
 
-.contact-wall-manifesto i {
-  display: block;
-  width: 1.8cqw;
-  height: 1px;
-  background: #927552;
-  margin-top: 10px;
-}
-
-/* --------------------------------------------------------------------------
-   18. CONTACT INFORMATION BAR
-   -------------------------------------------------------------------------- */
 .contact-info-separator {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 235px;
+  position: relative;
+  width: 100%;
   height: 1px;
   background: var(--gold-line);
-  z-index: 10;
+  margin-bottom: 28px;
 }
 
 .contact-info-bar {
-  position: absolute;
-  left: 3.8%;
-  right: 3.8%;
-  bottom: 40px;
+  position: relative;
+  padding: 0 4% 30px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -298,15 +257,15 @@
 .contact-footer-col {
   display: flex;
   flex-direction: column;
-  gap: 0.6cqw;
+  gap: 8px;
 }
 
 .contact-col-heading {
-  font: 500 clamp(10px, 0.68cqw, 13.5px)/1.2 var(--sans);
+  font: 500 clamp(10px, 0.7vw, 13px)/1.2 var(--sans);
   letter-spacing: 0.22em;
   color: var(--gold);
   text-transform: uppercase;
-  margin-bottom: 0.4cqw;
+  margin-bottom: 4px;
 }
 
 .contact-footer-nav-list {
@@ -315,11 +274,11 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4cqw;
+  gap: 6px;
 }
 
 .contact-footer-nav-list a {
-  font: 400 clamp(11px, 0.78cqw, 14.5px)/1.4 var(--sans);
+  font: 400 clamp(11px, 0.78vw, 14px)/1.4 var(--sans);
   letter-spacing: 0.14em;
   color: var(--ivory);
   text-decoration: none;
@@ -336,8 +295,8 @@
 .contact-info-block {
   display: flex;
   align-items: center;
-  gap: 0.75cqw;
-  margin-bottom: 0.2cqw;
+  gap: 10px;
+  margin-bottom: 2px;
 }
 
 .contact-info-icon {
@@ -349,7 +308,7 @@
 }
 
 .contact-info-main {
-  font: 400 clamp(11px, 0.8cqw, 14.5px)/1.3 var(--sans);
+  font: 400 clamp(11px, 0.8vw, 14px)/1.3 var(--sans);
   letter-spacing: 0.08em;
   color: var(--ivory);
   text-decoration: none;
@@ -370,35 +329,33 @@
 .contact-social-block {
   display: flex;
   flex-direction: column;
-  gap: 0.5cqw;
+  gap: 8px;
 }
 
 .contact-social-label {
-  font: 500 clamp(10px, 0.68cqw, 13.5px)/1.2 var(--sans);
+  font: 500 clamp(10px, 0.7vw, 13px)/1.2 var(--sans);
   letter-spacing: 0.24em;
   color: var(--gold);
   text-transform: uppercase;
-  margin-bottom: 0.2cqw;
+  margin-bottom: 2px;
 }
 
 .contact-social-tagline {
-  font: 400 clamp(9.5px, 0.62cqw, 12.5px)/1 var(--sans);
+  font: 400 clamp(9.5px, 0.65vw, 12px)/1 var(--sans);
   letter-spacing: 0.2em;
   color: rgba(240, 231, 217, 0.65);
-  margin-top: 0.2cqw;
+  margin-top: 2px;
 }
 
 .contact-social-icons {
   display: flex;
   align-items: center;
-  gap: 0.75cqw;
+  gap: 12px;
 }
 
 .contact-social-btn {
-  width: 2.1cqw;
-  height: 2.1cqw;
-  min-width: 32px;
-  min-height: 32px;
+  width: 34px;
+  height: 34px;
   border: 1px solid rgba(203, 177, 128, 0.4);
   border-radius: 50%;
   display: grid;
@@ -419,53 +376,47 @@
 .contact-right-micro {
   display: flex;
   flex-direction: column;
-  font: 400 clamp(10px, 0.68cqw, 13.5px)/1.65 var(--sans);
+  font: 400 clamp(10px, 0.7vw, 13px)/1.65 var(--sans);
   letter-spacing: 0.24em;
   color: var(--gold);
   text-transform: uppercase;
-  padding-top: 0.1cqw;
 }
 
-/* --------------------------------------------------------------------------
-   24. GIANT BLACK SHEEP FOOTER TYPOGRAPHY
-   -------------------------------------------------------------------------- */
+/* GIANT WATERMARK BRAND */
 .contact-giant-brand {
-  position: absolute;
-  left: 3.5%;
-  right: 3.5%;
-  bottom: -2.8%;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font: 400 clamp(75px, 11.2cqw, 195px)/0.82 var(--serif);
+  position: relative;
+  width: 100%;
+  padding: 0 3.5%;
+  font: 400 clamp(65px, 11vw, 185px)/0.82 var(--serif);
   letter-spacing: 0.04em;
   color: rgba(185, 45, 62, 0.12);
   pointer-events: none;
   user-select: none;
   z-index: 2;
   white-space: nowrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  box-sizing: border-box;
 }
 
 .contact-giant-brand span {
   display: inline-block;
 }
 
-/* --------------------------------------------------------------------------
-   25 & 26. COPYRIGHT & FOOTER LEGAL LINKS
-   -------------------------------------------------------------------------- */
+/* COPYRIGHT & LEGAL BAR */
 .contact-legal-bar {
-  position: absolute;
-  left: 3.8%;
-  right: 3.8%;
-  bottom: 12px;
+  position: relative;
+  padding: 16px 4% 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 12;
+  box-sizing: border-box;
 }
 
 .contact-copyright {
-  font: 400 clamp(10.5px, 0.72cqw, 13.5px)/1 var(--sans);
+  font: 400 clamp(10px, 0.7vw, 13px)/1 var(--sans);
   letter-spacing: 0.12em;
   color: rgba(240, 231, 217, 0.75);
 }
@@ -476,195 +427,222 @@
   gap: 24px;
 }
 
-.contact-legal-link {
-  font: 400 clamp(10px, 0.68cqw, 12.5px)/1 var(--sans);
+.contact-legal-btn {
+  font: 400 clamp(10px, 0.68vw, 12px)/1 var(--sans);
   letter-spacing: 0.22em;
   color: rgba(203, 177, 128, 0.85);
-  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
   text-transform: uppercase;
   transition: all 0.3s ease;
-  position: relative;
 }
 
-.contact-legal-link:hover {
+.contact-legal-btn:hover {
   color: var(--gold);
 }
 
 /* --------------------------------------------------------------------------
-   MOBILE & TABLET RESPONSIVENESS
+   INTERACTIVE LEGAL MODAL OVERLAY
    -------------------------------------------------------------------------- */
-.contact-mobile-arch {
-  display: none;
+.contact-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(14, 3, 5, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeInModal 0.3s ease forwards;
 }
 
-@media (max-width: 1100px) {
-  .contact-section {
-    height: auto;
-    min-height: 100svh;
-    padding: 40px 6vw 50px;
-    display: flex;
-    flex-direction: column;
-    container-type: normal;
-  }
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-  .contact-bg-plate {
-    display: none;
-  }
+.contact-modal-card {
+  width: min(680px, 92vw);
+  max-height: 82vh;
+  background: #1e060a;
+  border: 1px solid rgba(203, 177, 128, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  color: var(--ivory);
+  position: relative;
+  overflow: hidden;
+}
 
-  .contact-top-brand,
-  .contact-section-label,
-  .contact-headline,
-  .contact-support-copy,
-  .contact-cta-group,
-  .contact-info-separator,
-  .contact-info-bar,
-  .contact-giant-brand,
-  .contact-legal-bar {
-    position: relative;
-    inset: auto;
-    width: auto;
-    max-width: none;
-  }
+.contact-modal-header {
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid rgba(203, 177, 128, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .contact-top-brand > span {
-    font-size: 24px;
-  }
+.contact-modal-eyebrow {
+  font: 400 10px/1 var(--sans);
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
 
-  .contact-top-brand small {
-    font-size: 11px;
-    margin-top: 5px;
-  }
+.contact-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(203, 177, 128, 0.3);
+  background: transparent;
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-  .contact-top-line,
-  .contact-top-nav,
-  .contact-wall-manifesto {
-    display: none;
-  }
+.contact-modal-close:hover {
+  background: var(--gold);
+  color: var(--burgundy);
+}
 
-  .contact-section-label {
-    font-size: 11px;
-    margin-top: 0;
-  }
+.contact-modal-body {
+  padding: 28px 32px 36px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-muted) transparent;
+}
 
-  .contact-headline {
-    margin-top: 24px;
-  }
+.contact-modal-body h2 {
+  font: 400 clamp(26px, 3vw, 38px)/1.05 var(--serif);
+  letter-spacing: -0.02em;
+  color: var(--ivory);
+  margin: 0 0 12px 0;
+}
 
-  .contact-headline-primary {
-    font-size: clamp(48px, 11vw, 84px);
-    line-height: 0.92;
-  }
+.modal-lead {
+  font: 400 13.5px/1.7 var(--sans);
+  color: #cfc1ae;
+  margin: 0 0 24px 0;
+  border-bottom: 1px solid rgba(203, 177, 128, 0.15);
+  padding-bottom: 18px;
+}
 
-  .contact-headline-italic {
-    font-size: clamp(40px, 9.5vw, 72px);
-    line-height: 0.95;
-    padding-left: 0;
-  }
+.modal-section {
+  margin-bottom: 20px;
+}
 
-  .contact-support-copy {
-    font-size: 13px;
-    line-height: 1.8;
-    margin-top: 22px;
-    max-width: 500px;
-  }
+.modal-section h3 {
+  font: 500 11px/1.3 var(--sans);
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+}
 
-  .contact-cta-group {
-    margin-top: 32px;
-  }
+.modal-section p {
+  font: 400 13px/1.7 var(--sans);
+  color: rgba(240, 231, 217, 0.85);
+  margin: 0;
+}
 
-  .contact-cta-circle {
-    width: 105px;
-    height: 105px;
-    font-size: 10px;
-  }
+.modal-link {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
-  .contact-cta-arrow {
-    margin-left: 16px;
-  }
+/* COOKIE TOGGLE CONTROL STYLES */
+.cookie-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(203, 177, 128, 0.15);
+}
 
-  .contact-cta-divider {
-    margin-left: 24px;
-    height: 48px;
-  }
+.cookie-info h3 {
+  font: 500 11px/1.3 var(--sans);
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin: 0 0 4px 0;
+}
 
-  .contact-cta-micro {
-    margin-left: 16px;
-    font-size: 8px;
-  }
+.cookie-info p {
+  font: 400 12.5px/1.6 var(--sans);
+  color: rgba(240, 231, 217, 0.8);
+  margin: 0;
+}
 
-  /* Dedicated Mobile Architectural View */
-  .contact-mobile-arch {
-    display: block;
-    width: 100%;
-    height: clamp(240px, 55vw, 380px);
-    margin: 24px 0 20px;
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-  }
+.cookie-badge-active {
+  font: 500 9.5px/1 var(--sans);
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  background: rgba(203, 177, 128, 0.12);
+  border: 1px solid rgba(203, 177, 128, 0.3);
+  padding: 8px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
 
-  .contact-mobile-arch img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
+.cookie-switch {
+  font: 500 9.5px/1 var(--sans);
+  letter-spacing: 0.18em;
+  color: rgba(240, 231, 217, 0.6);
+  background: transparent;
+  border: 1px solid rgba(240, 231, 217, 0.25);
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
 
-  .contact-mobile-arch::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(0deg, #1b0305 0%, transparent 22%, transparent 88%, #1b0305 100%);
-    pointer-events: none;
-  }
+.cookie-switch.is-on {
+  color: var(--burgundy);
+  background: var(--gold);
+  border-color: var(--gold);
+}
 
-  /* Stacked Contact Rows */
-  .contact-info-separator {
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 24px;
-  }
+.cookie-action-bar {
+  margin-top: 28px;
+  display: flex;
+  justify-content: flex-end;
+}
 
+.cookie-save-btn {
+  font: 500 11px/1 var(--sans);
+  letter-spacing: 0.22em;
+  color: var(--burgundy);
+  background: var(--gold);
+  border: none;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cookie-save-btn:hover {
+  background: var(--ivory);
+  box-shadow: 0 4px 16px rgba(203, 177, 128, 0.3);
+}
+
+/* RESPONSIVE BEHAVIOR */
+@media (max-width: 900px) {
   .contact-info-bar {
-    display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: 24px;
-  }
-
-  .contact-info-block {
-    gap: 16px;
-    width: 100%;
-  }
-
-  .contact-info-main {
-    font-size: 15px;
-  }
-
-  .contact-info-sub {
-    font-size: 14px;
+    padding: 0 6% 24px;
   }
 
   .contact-v-divider {
     display: none;
-  }
-
-  .contact-social-block {
-    margin-top: 8px;
-    gap: 12px;
-  }
-
-  .contact-social-label {
-    font-size: 10px;
-  }
-
-  .contact-social-icons {
-    gap: 14px;
-  }
-
-  .contact-social-btn {
-    width: 38px;
-    height: 38px;
   }
 
   .contact-right-micro {
@@ -672,50 +650,212 @@
   }
 
   .contact-giant-brand {
-    margin-top: 50px;
-    font-size: clamp(48px, 14vw, 92px);
-    line-height: 0.9;
-    letter-spacing: 0.06em;
+    font-size: clamp(48px, 13vw, 90px);
     justify-content: center;
     gap: 16px;
   }
 
   .contact-legal-bar {
-    margin-top: 32px;
     flex-direction: column-reverse;
     gap: 14px;
     text-align: center;
+    padding: 16px 6% 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .contact-cta-group {
-    flex-wrap: wrap;
-    gap: 18px 20px;
-  }
-
-  .contact-cta-divider {
-    display: none;
-  }
-
-  .contact-cta-micro {
-    margin-left: 0;
-    width: 100%;
-  }
-
   .contact-giant-brand {
     flex-direction: column;
     align-items: center;
     gap: 0;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .contact-section *,
-  .contact-section *::before,
-  .contact-section *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
+  .cookie-toggle-row {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   REFERENCE-STYLE COOKIE BANNER POPUP (BRAND COLOR PALETTE)
+   ========================================================================== */
+.bs-cookie-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  width: min(480px, calc(100vw - 32px));
+  background: linear-gradient(145deg, #45171b 0%, #2a0a0d 100%);
+  border: 1px solid rgba(203, 177, 128, 0.35);
+  border-radius: 20px;
+  padding: 24px 28px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 35px rgba(69, 23, 27, 0.4);
+  color: #f0e7d9;
+  box-sizing: border-box;
+  animation: cookieBannerFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cookieBannerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.bs-cookie-banner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.bs-cookie-banner-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bs-cookie-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(203, 177, 128, 0.12);
+  border: 1px solid rgba(203, 177, 128, 0.28);
+  display: grid;
+  place-items: center;
+  color: #cbb180;
+  flex-shrink: 0;
+}
+
+.bs-cookie-banner-title {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 3px 0;
+  color: #f0e7d9;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.bs-cookie-banner-subtitle {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: #cbb180;
+  display: block;
+  opacity: 0.85;
+}
+
+.bs-cookie-close-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(240, 231, 217, 0.08);
+  border: 1px solid rgba(203, 177, 128, 0.2);
+  color: rgba(240, 231, 217, 0.7);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.bs-cookie-close-btn:hover {
+  background: rgba(203, 177, 128, 0.2);
+  color: #f0e7d9;
+  border-color: #cbb180;
+}
+
+.bs-cookie-banner-text {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(240, 231, 217, 0.82);
+  margin: 0 0 22px 0;
+}
+
+.bs-cookie-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: #cbb180;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  display: inline;
+}
+
+.bs-cookie-link-btn:hover {
+  color: #ffffff;
+}
+
+.bs-cookie-banner-actions {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 12px;
+}
+
+.bs-cookie-btn-primary {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #45171b;
+  background: #f0e7d9;
+  border: 1px solid #f0e7d9;
+  border-radius: 14px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+.bs-cookie-btn-primary:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(240, 231, 217, 0.3);
+}
+
+.bs-cookie-btn-secondary {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #f0e7d9;
+  background: rgba(240, 231, 217, 0.08);
+  border: 1px solid rgba(203, 177, 128, 0.3);
+  border-radius: 14px;
+  padding: 14px 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.bs-cookie-btn-secondary:hover {
+  background: rgba(203, 177, 128, 0.18);
+  border-color: #cbb180;
+  color: #ffffff;
+}
+
+@media (max-width: 540px) {
+  .bs-cookie-banner {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .bs-cookie-banner-actions {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+
